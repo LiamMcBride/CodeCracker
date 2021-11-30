@@ -24,7 +24,7 @@ def crack_password(password, dictionary):
             print(word + " is the correct password!")
             break
 
-crack_password(hash(user_password), read_dictionary("small_list.txt"))
+crack_password(hash(user_password), read_dictionary("src/hw_13/small_list.txt"))
 
 print(time.time() - start)
 
