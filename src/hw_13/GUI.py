@@ -1,27 +1,23 @@
 from tkinter import *
+from BreakingGUI import BreakingGUI
+from Style import Style
 
 class GUI:
     def __init__(self, master):
-        self.fontType = "Ariel"
-        self.minWidth = 1000
-        self.minHeight = 600
-        self.bgColor = "#17223B"
-        self.fgColor = "#263859"
-        self.textColor = "#FF6768"
         self.master = master
         master.title("Code Cracker")
-        #master.geometry(self.screenSize)
-        master.minsize(self.minWidth, self.minHeight)
-        master.configure(background = self.bgColor)
+        #master.geometry(Style.screenSize)
+        master.minsize(Style.minWidth, Style.minHeight)
+        master.configure(background = Style.bgColor)
         #master.attributes('-fullscreen', True)
 
         self.label = Label(
             master,
             text="Welcome to Code Cracker",
             height = 2,
-            font = (self.fontType, 25),
-            bg = self.bgColor,
-            fg = self.textColor
+            font = (Style.fontType, 25),
+            bg = Style.bgColor,
+            fg = Style.textColor
             )
         #.grid(column=4)
         self.label.pack()
@@ -30,15 +26,15 @@ class GUI:
             master,
             text="Please enter desired password:",
             height = 2,
-            font = (self.fontType, 15),
-            bg = self.bgColor,
-            fg = self.textColor
+            font = (Style.fontType, 15),
+            bg = Style.bgColor,
+            fg = Style.textColor
             )
         self.label2.pack()
 
         self.input = Entry(
             master,
-            font = (self.fontType, 15),
+            font = (Style.fontType, 15),
             text="password",
         )
         self.input.pack()
@@ -46,7 +42,7 @@ class GUI:
         self.spacer = Label(
             master,            
             height = 2,
-            bg = self.bgColor,
+            bg = Style.bgColor,
             )
         self.spacer.pack()
 
@@ -54,16 +50,16 @@ class GUI:
             master,
             text="Choose SHA Encoding:",
             height = 2,
-            font = (self.fontType, 15),
-            bg = self.bgColor,
-            fg = self.textColor
+            font = (Style.fontType, 15),
+            bg = Style.bgColor,
+            fg = Style.textColor
             )
         self.label2.pack()
 
         v = StringVar(master, "1")
 
-        choices = {"SHA 5" : "1",
-                    "SHA 2" : "2"}
+        choices = {"SHA 256" : "1",
+                    "SHA 512" : "2"}
 
         for (text, value) in choices.items():
             Radiobutton(
@@ -73,15 +69,70 @@ class GUI:
                 value = value,
                 indicator = 0,
                 command = None,
-                bg = self.bgColor,
-                fg = self.textColor,
-                font = (self.fontType, 10)
+                bg = Style.bgColor,
+                fg = Style.textColor,
+                font = (Style.fontType, 10)
+            ).pack()
+
+        self.spacer = Label(
+        master,            
+        height = 2,
+        bg = Style.bgColor,
+        )
+        self.spacer.pack()
+
+        self.label2 = Label(
+            master,
+            text="Choose a Dictionary:",
+            height = 2,
+            font = (Style.fontType, 15),
+            bg = Style.bgColor,
+            fg = Style.textColor
+            )
+        self.label2.pack()
+
+        v = StringVar(master, "1")
+        choices = {
+            "1000 Passwords": "1",
+            "10,000 Passwords": "2",
+            "100,000 Passwords": "3"
+        }
+
+        for (text, value) in choices.items():
+            Radiobutton(
+                master,
+                text=text,
+                variable = v,
+                value = value,
+                indicator = 0,
+                command = None,
+                width=15,
+                bg = Style.bgColor,
+                fg = Style.textColor,
+                font = (Style.fontType, 10)
             ).pack()
 
         self.spacer = Label(
             master,            
-            height = 10,
-            bg = self.bgColor,
+            height = 2,
+            bg = Style.bgColor,
+            )
+        self.spacer.pack()
+
+        self.startButton = Button(
+            master,
+            text="Start Decoding",
+            command=self.startDecode,
+            font = (Style.fontType, 10),
+            bg = Style.bgColor,
+            fg = Style.textColor
+        ).pack()
+        
+
+        self.spacer = Label(
+            master,            
+            height = 1,
+            bg = Style.bgColor,
             )
         self.spacer.pack()
 
@@ -89,19 +140,29 @@ class GUI:
             master,
             text="Quit",
             command=master.quit,
-            font = (self.fontType, 10),
-            bg = self.bgColor,
-            fg = self.textColor
+            font = (Style.fontType, 10),
+            bg = Style.bgColor,
+            fg = Style.textColor
             )
         self.close_button.pack()
 
+        self.spacer = Label(
+            master,            
+            height = 1,
+            bg = Style.bgColor,
+            )
+        self.spacer.pack()
 
 
-    def shaValue(self, value):
-        print(value)
 
-    def greet(self):
-        print("Greetings!")
+    def startDecode(self):
+        root2 = Tk()
+        window2 = BreakingGUI(root2, "epson")
+        window2.clock()
+        root2.mainloop()
+        
+        
+
 
 root = Tk()
 gui = GUI(root)
