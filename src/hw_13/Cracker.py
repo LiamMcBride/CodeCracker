@@ -46,11 +46,12 @@ class Cracker:
         dict_file = open(title, "r", encoding="utf8")
 
         for line in dict_file:
-            dict_array.append(line.rstrip("\n"))
-            self.total += 1
+            if len(self.user_password) >= len(line):
+                dict_array.append(line.rstrip("\n"))
+                self.total += 1
         
         return (dict_array)
-
+           
     def crack_password(self, password, dictionary):
         for word in dictionary:
             self.currentPassword = word
@@ -62,7 +63,46 @@ class Cracker:
                 print(word + " is the correct password!")
                 break
         if self.solved == False:
-            self.failed = True
+            for word in dictionary:
+                for word2 in dictionary:
+                    self.currentPassword = word + word2
+                    if len(self.user_password) >= len(self.currentPassword):
+                        
+                        print(self.currentPassword)
+                        self.tested += 1
+                        if(hash(word + word2) == password):                        
+                            self.end = time.time()
+                            self.solved = True
+                            print(word + word2 + " is the correct password!")
+                            break
+                if self.solved == True:
+                    break
+
+            if self.solved == False:
+                for word in dictionary:
+                    for word2 in dictionary:
+                        for word3 in dictionary:
+                            self.currentPassword = word + word2 + word3
+                            if len(self.user_password) >= len(self.currentPassword):
+                                
+                                print(self.currentPassword)
+                                self.tested += 1
+                                if(hash(word + word2 + word3) == password):                        
+                                    self.end = time.time()
+                                    self.solved = True
+                                    print(word + word2 + word3 + " is the correct password!")
+                                    break
+
+                        if self.solved == True:
+                            break
+                    
+                    if self.solved == True:
+                        break
+
+
+
+                if self.solved == False:
+                    self.failed = True
 
 
 
