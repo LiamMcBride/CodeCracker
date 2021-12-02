@@ -28,4 +28,4 @@ python GUI.py
 - [GUI.py](src/hw_13/GUI.py): Collects user input, as well as stores the array of previous passwords and stats.
 - [BreakingGUI.py](src/hw_13/BreakingGUI.py): Show's the user that the program is running as well as connects the user input and front end to the backend. Additionally handles the display of the results from the backend.
 - [Cracker.py](src/hw_13/Cracker.py): This is the backend and the actual logic behind the program
-- [small_list, 10k_list, 100k_list](small_list.txt): The dictionaries being read from.
+- [small_list, 10k_list, 100k_list](src/hw_13/small_list.txt): The dictionaries being read from.
