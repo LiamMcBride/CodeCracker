@@ -21,7 +21,14 @@ class Cracker:
     
     def getCrackin(self):
         self.start = time.time()
-        self.crack_password(hash(self.user_password), self.read_dictionary("src/hw_13/" + self.dictionary))
+        
+        try:
+            self.crack_password(hash(self.user_password), self.read_dictionary(self.dictionary))
+        except:
+            try:
+                self.crack_password(hash(self.user_password), self.read_dictionary("./src/hw_13/" + self.dictionary))
+            except:
+                print("File system is not working. Please try via command line.")
         
     def getTotalPasswords(self):
         return self.total
@@ -46,7 +53,7 @@ class Cracker:
         dict_file = open(title, "r", encoding="utf8")
 
         for line in dict_file:
-            if len(self.user_password) >= len(line):
+            if len(self.user_password) >= len(line) - 1:
                 dict_array.append(line.rstrip("\n"))
                 self.total += 1
         
@@ -55,18 +62,19 @@ class Cracker:
     def crack_password(self, password, dictionary):
         for word in dictionary:
             self.currentPassword = word
-            self.tested += 1
-            print(self.currentPassword)
-            if hash(word) == password:
-                self.end = time.time()
-                self.solved = True
-                print(word + " is the correct password!")
-                break
+            if len(self.user_password) == len(self.currentPassword):
+                self.tested += 1
+                print(self.currentPassword)
+                if hash(word) == password:
+                    self.end = time.time()
+                    self.solved = True
+                    print(word + " is the correct password!")
+                    break
         if self.solved == False:
             for word in dictionary:
                 for word2 in dictionary:
                     self.currentPassword = word + word2
-                    if len(self.user_password) >= len(self.currentPassword):
+                    if len(self.user_password) == len(self.currentPassword):
                         
                         print(self.currentPassword)
                         self.tested += 1
@@ -83,7 +91,7 @@ class Cracker:
                     for word2 in dictionary:
                         for word3 in dictionary:
                             self.currentPassword = word + word2 + word3
-                            if len(self.user_password) >= len(self.currentPassword):
+                            if len(self.user_password) == len(self.currentPassword):
                                 
                                 print(self.currentPassword)
                                 self.tested += 1

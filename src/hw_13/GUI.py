@@ -13,7 +13,11 @@ class GUI:
         self.master = master
         master.title("Code Cracker")        
         master.minsize(Style.minWidth, Style.minHeight)
-        master.configure(background = Style.bgColor)        
+        master.configure(background = Style.bgColor)  
+
+        #Fields
+        self.times = []
+        self.passwords = []      
 
         #Label and button set up
         self.label = Label(
@@ -187,9 +191,10 @@ class GUI:
     def startDecode(self):
         root2 = Tk()
         print(str(self.set1.get()) + " " + str(self.set2.get()) + " " + self.pword.get())
-        window2 = BreakingGUI(root2, self.pword.get(), self.set1.get(), self.set2.get())
+        window2 = BreakingGUI(root2, self.pword.get(), self.set1.get(), self.set2.get(), self.times, self.passwords)
         window2.clock()
         root2.mainloop()
+        
 
 #Starts the program
 root = Tk()

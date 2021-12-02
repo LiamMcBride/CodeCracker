@@ -1,6 +1,7 @@
 from tkinter import *
 from Style import Style
 from Cracker import Cracker
+import matplotlib.pyplot as plt
 
 '''
 Result screen GUI for the code cracker project.
@@ -8,9 +9,9 @@ Authors: Liam McBride, Patrick Edmonds
 Version: 12/01/2021
 '''
 class BreakingGUI:
-    def __init__(self, master, user_password, sha, dictionary):
+    def __init__(self, master, user_password, sha, dictionary, times, passwords):
         #Sets up backend and begins cracking
-        self.cracker = Cracker(user_password, sha, dictionary) 
+        self.cracker = Cracker(user_password, sha, dictionary)
 
         #Sets up window
         self.master = master
@@ -18,6 +19,12 @@ class BreakingGUI:
         master.minsize(Style.minWidth, Style.minHeight)
         master.configure(background = Style.bgColor)
         self.passedTime = 0
+
+        #Sets up fields
+        self.sha = sha
+        self.times = times
+        self.passwords = passwords
+        self.dictionary = dictionary
 
         #Labels
         self.label = Label(
@@ -59,6 +66,8 @@ class BreakingGUI:
         fg = Style.textColor
         )
         self.lblEndTime.pack()    
+
+        
         
     def clock(self):
         if(self.passedTime > -1):
@@ -71,6 +80,17 @@ class BreakingGUI:
             self.lblProgress.config(text= str(self.cracker.getTotalDone()) + " of " + str(self.cracker.getTotalPasswords()) + " Tested")
             self.lblEndPassword.config(text= "The password is " + str(self.cracker.getCurrentPassword()))
             self.lblEndTime.config(text="It was found in " + str(self.cracker.getTime()) + " seconds")
+
+            self.times.append(self.cracker.getTime())
+            self.passwords.append(self.cracker.getCurrentPassword() + "\nw/ " + self.sha +
+             "\nUsing: " + self.dictionary + "\nUsing " + str(self.cracker.getTotalDone())
+              + " guesses")
+            plt.bar(self.passwords, self.times)
+            plt.ylabel('Time (Seconds)')
+            plt.xlabel('Password')
+            mng = plt.get_current_fig_manager()
+            mng.full_screen_toggle()
+            plt.show()
         elif self.cracker.failed:
             self.lblProgress.config(text= "Failed to find password. Try another dictionary.")
         else:
