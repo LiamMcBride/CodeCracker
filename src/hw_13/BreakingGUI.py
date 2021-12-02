@@ -18,13 +18,13 @@ class BreakingGUI:
         master.title("Code Cracker")
         master.minsize(Style.minWidth, Style.minHeight)
         master.configure(background = Style.bgColor)
-        self.passedTime = 0
 
         #Sets up fields
         self.sha = sha
         self.times = times
         self.passwords = passwords
         self.dictionary = dictionary
+        self.passedTime = 0
 
         #Labels
         self.label = Label(
@@ -45,42 +45,20 @@ class BreakingGUI:
             bg = Style.bgColor,
             fg = Style.textColor
             )
-        self.lblProgress.pack()
-
-        self.lblEndPassword = Label(
-        self.master,
-        text="",
-        height = 2,
-        font = (Style.fontType, 15),
-        bg = Style.bgColor,
-        fg = Style.textColor
-        )
-        self.lblEndPassword.pack()
-
-        self.lblEndTime = Label(
-        self.master,
-        text="",
-        height = 2,
-        font = (Style.fontType, 15),
-        bg = Style.bgColor,
-        fg = Style.textColor
-        )
-        self.lblEndTime.pack()    
+        self.lblProgress.pack()  
 
         
-        
+    #This function runs like a clock. Running every 100 miliseconds to check for updates in the backend
     def clock(self):
         if(self.passedTime > -1):
             self.passedTime += 1
         self.lblProgress.config(text="Loading...") 
+        #Starts the backend after a slight delay to let the window load
         if(self.passedTime > 30):
             self.cracker.getCrackin()
-            self.passedTime = -1       
+            self.passedTime = -1
+        #When it is solved the matplot is displayed       
         if(self.cracker.solved):
-            self.lblProgress.config(text= str(self.cracker.getTotalDone()) + " of " + str(self.cracker.getTotalPasswords()) + " Tested")
-            self.lblEndPassword.config(text= "The password is " + str(self.cracker.getCurrentPassword()))
-            self.lblEndTime.config(text="It was found in " + str(self.cracker.getTime()) + " seconds")
-
             self.times.append(self.cracker.getTime())
             self.passwords.append(self.cracker.getCurrentPassword() + " w/ " + self.sha +
              "\nUsing: " + self.dictionary + " Using " + str(self.cracker.getTotalDone())
@@ -91,8 +69,10 @@ class BreakingGUI:
             mng = plt.get_current_fig_manager()
             mng.full_screen_toggle()
             plt.show()
+        #Displays failure to user
         elif self.cracker.failed:
             self.lblProgress.config(text= "Failed to find password. Try another dictionary.")
+        #Keeps the clock ticking
         else:
             self.master.after(100, self.clock)
     

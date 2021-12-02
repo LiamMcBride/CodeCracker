@@ -20,34 +20,38 @@ class Cracker:
         self.dictionary = dictionary
     
     def getCrackin(self):
+        #Starts timer for the password cracking
         self.start = time.time()
         
+        #This corrects for the difference in how eclipse, vs code, and command line treat the file systems.
         try:
             self.crack_password(hash(self.user_password), self.read_dictionary(self.dictionary))
         except:
             try:
                 self.crack_password(hash(self.user_password), self.read_dictionary("./src/hw_13/" + self.dictionary))
             except:
-                print("File system is not working. Please try via command line.")
-        
-    def getTotalPasswords(self):
-        return self.total
-    
+                print("File system is not working. Please try via command line. See README.md for more info.")
+
+    #Used to get final password for user display    
     def getCurrentPassword(self):
         return self.currentPassword
 
+    #Used to get total time for user display
     def getTime(self):
         if(self.end - self.start < 0):
             return time.time() - self.start
         return self.end - self.start
 
+    #Used to get total passwords tested for user display
     def getTotalDone(self):
         return self.tested
 
+    #Hashes the password w/ either sha encrytion
     def hash(self, password):
         hashed_pwd = hashlib.pbkdf2_hmac(self.sha, password.encode('utf-8'), b'salt', 100000)
         return binascii.hexlify(hashed_pwd)
 
+    #Reads the dictionary and gets rid of passwords that surpass the passwords length
     def read_dictionary(self, title):
         dict_array = []
         dict_file = open(title, "r", encoding="utf8")
@@ -62,8 +66,10 @@ class Cracker:
             self.solved = True
         
         return (dict_array)
-           
+
+    #Tests the password against the dictionary    
     def crack_password(self, password, dictionary):
+        #Tests single words from the dictionary
         for word in dictionary:
             self.currentPassword = word
             if len(self.user_password) == len(self.currentPassword):
@@ -75,6 +81,7 @@ class Cracker:
                     print(word + " is the correct password!")
                     break
         if self.solved == False:
+            #Tests passwords containing two words from the dictionary
             for word in dictionary:
                 for word2 in dictionary:
                     self.currentPassword = word + word2
@@ -91,6 +98,7 @@ class Cracker:
                     break
 
             if self.solved == False:
+                #Tests passwords containing three words from the diction
                 for word in dictionary:
                     for word2 in dictionary:
                         for word3 in dictionary:
@@ -115,7 +123,3 @@ class Cracker:
 
                 if self.solved == False:
                     self.failed = True
-
-
-
-
