@@ -2,15 +2,20 @@ from tkinter import *
 from BreakingGUI import BreakingGUI
 from Style import Style
 
+'''
+Set up GUI for the code cracker project.
+Authors: Liam McBride, Patrick Edmonds
+Version: 12/01/2021
+'''
 class GUI:
     def __init__(self, master):
+        #Window set up
         self.master = master
-        master.title("Code Cracker")
-        #master.geometry(Style.screenSize)
+        master.title("Code Cracker")        
         master.minsize(Style.minWidth, Style.minHeight)
-        master.configure(background = Style.bgColor)
-        #master.attributes('-fullscreen', True)
+        master.configure(background = Style.bgColor)        
 
+        #Label and button set up
         self.label = Label(
             master,
             text="Welcome to Code Cracker",
@@ -18,9 +23,7 @@ class GUI:
             font = (Style.fontType, 25),
             bg = Style.bgColor,
             fg = Style.textColor
-            )
-        #.grid(column=4)
-        self.label.pack()
+            ).pack()
 
         self.label2 = Label(
             master,
@@ -29,22 +32,22 @@ class GUI:
             font = (Style.fontType, 15),
             bg = Style.bgColor,
             fg = Style.textColor
-            )
-        self.label2.pack()
+            ).pack()
 
-        self.input = Entry(
+        self.pword = StringVar(master, "")
+
+        self.password_input = Entry(
             master,
             font = (Style.fontType, 15),
             text="password",
-        )
-        self.input.pack()
+            textvariable= self.pword
+        ).pack()
 
         self.spacer = Label(
             master,            
             height = 2,
             bg = Style.bgColor,
-            )
-        self.spacer.pack()
+            ).pack()
 
         self.label2 = Label(
             master,
@@ -53,20 +56,27 @@ class GUI:
             font = (Style.fontType, 15),
             bg = Style.bgColor,
             fg = Style.textColor
-            )
-        self.label2.pack()
+            ).pack()
 
-        v = StringVar(master, "1")
+        self.set1 = StringVar(master, "SHA256")
 
-        choices = {"SHA 256" : "1",
-                    "SHA 512" : "2"}
-
-        for (text, value) in choices.items():
-            Radiobutton(
+        self.rad1 = Radiobutton(
                 master,
-                text=text,
-                variable = v,
-                value = value,
+                text="SHA 256",
+                variable = self.set1,
+                value = "SHA256",
+                indicator = 0,
+                command = None,
+                bg = Style.bgColor,
+                fg = Style.textColor,
+                font = (Style.fontType, 10)
+            ).pack()
+
+        self.rad2 = Radiobutton(
+                master,
+                text="SHA 512",
+                variable = self.set1,
+                value = "SHA512",
                 indicator = 0,
                 command = None,
                 bg = Style.bgColor,
@@ -91,19 +101,39 @@ class GUI:
             )
         self.label2.pack()
 
-        v = StringVar(master, "1")
-        choices = {
-            "1000 Passwords": "1",
-            "10,000 Passwords": "2",
-            "100,000 Passwords": "3"
-        }
+        self.set2 = StringVar(master, "small_list.txt")
 
-        for (text, value) in choices.items():
-            Radiobutton(
+        self.rad3 = Radiobutton(
                 master,
-                text=text,
-                variable = v,
-                value = value,
+                text="1000 Passwords",
+                variable = self.set2,
+                value = "small_list.txt",
+                indicator = 0,
+                command = None,
+                width=15,
+                bg = Style.bgColor,
+                fg = Style.textColor,
+                font = (Style.fontType, 10)
+            ).pack()
+
+        self.rad4 = Radiobutton(
+                master,
+                text="10,000 Passwords",
+                variable = self.set2,
+                value = "10k_list.txt",
+                indicator = 0,
+                command = None,
+                width=15,
+                bg = Style.bgColor,
+                fg = Style.textColor,
+                font = (Style.fontType, 10)
+            ).pack()
+
+        self.rad5 = Radiobutton(
+                master,
+                text="100,000 Passwords",
+                variable = self.set2,
+                value = "100k_list.txt",
                 indicator = 0,
                 command = None,
                 width=15,
@@ -153,17 +183,15 @@ class GUI:
             )
         self.spacer.pack()
 
-
-
+    #Sends settings and file name to the BreakingGUI
     def startDecode(self):
         root2 = Tk()
-        window2 = BreakingGUI(root2, "epson")
+        print(str(self.set1.get()) + " " + str(self.set2.get()) + " " + self.pword.get())
+        window2 = BreakingGUI(root2, self.pword.get())
         window2.clock()
         root2.mainloop()
-        
-        
 
-
+#Starts the program
 root = Tk()
 gui = GUI(root)
-root.mainloop()
+root.mainloop() 
