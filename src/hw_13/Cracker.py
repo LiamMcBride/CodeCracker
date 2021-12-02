@@ -7,20 +7,21 @@ Authors: Liam McBride, Patrick Edmonds
 Version: 12/01/2021
 '''
 class Cracker:
-    def __init__(self, user_password, gui):
+    def __init__(self, user_password, sha, dictionary):
         self.total = 0
         self.tested = 0
         self.currentPassword = None
         self.start = 0
         self.end = 0
         self.user_password = user_password
-        self.gui = gui
         self.solved = False
         self.failed = False
+        self.sha = sha
+        self.dictionary = dictionary
     
     def getCrackin(self):
         self.start = time.time()
-        self.crack_password(hash(self.user_password), self.read_dictionary("src/hw_13/100k_list.txt"))
+        self.crack_password(hash(self.user_password), self.read_dictionary("src/hw_13/" + self.dictionary))
         
     def getTotalPasswords(self):
         return self.total
@@ -37,7 +38,7 @@ class Cracker:
         return self.tested
 
     def hash(self, password):
-        hashed_pwd = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), b'salt', 100000)
+        hashed_pwd = hashlib.pbkdf2_hmac(self.sha, password.encode('utf-8'), b'salt', 100000)
         return binascii.hexlify(hashed_pwd)
 
     def read_dictionary(self, title):

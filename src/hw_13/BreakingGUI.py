@@ -8,9 +8,9 @@ Authors: Liam McBride, Patrick Edmonds
 Version: 12/01/2021
 '''
 class BreakingGUI:
-    def __init__(self, master, user_password):
+    def __init__(self, master, user_password, sha, dictionary):
         #Sets up backend and begins cracking
-        self.cracker = Cracker(user_password, self) 
+        self.cracker = Cracker(user_password, sha, dictionary) 
 
         #Sets up window
         self.master = master

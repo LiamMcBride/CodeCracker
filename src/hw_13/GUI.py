@@ -64,7 +64,7 @@ class GUI:
                 master,
                 text="SHA 256",
                 variable = self.set1,
-                value = "SHA256",
+                value = "sha256",
                 indicator = 0,
                 command = None,
                 bg = Style.bgColor,
@@ -76,7 +76,7 @@ class GUI:
                 master,
                 text="SHA 512",
                 variable = self.set1,
-                value = "SHA512",
+                value = "sha512",
                 indicator = 0,
                 command = None,
                 bg = Style.bgColor,
@@ -187,7 +187,7 @@ class GUI:
     def startDecode(self):
         root2 = Tk()
         print(str(self.set1.get()) + " " + str(self.set2.get()) + " " + self.pword.get())
-        window2 = BreakingGUI(root2, self.pword.get())
+        window2 = BreakingGUI(root2, self.pword.get(), self.set1.get(), self.set2.get())
         window2.clock()
         root2.mainloop()
 
