@@ -3,14 +3,14 @@ Made by Liam McBride and Patrick Edmonds
 ## How to run
 - It is best to run this directly from command line because of how the file system works.
 - It has worked in both eclipse and VS code as well though. But if there are issues just use command line
-- To do you'll want to start in hw_project -> src -> hw_13
-'''
+- To do this you'll want to start in hw_project -> src -> hw_13
+```
 cd src/hw_13
-'''
+```
 - From there run
-'''
+```
 python GUI.py
-'''
+```
 - Note might be python3 instead of python depending on your computer
 - From there you should see a screen w/ a inbox for a password as well as options for SHA types and dictionary types.
 - Select whatever values you want to. Note the further down the dictionary list your phrases are the longer it will take to crack so take a look at the list's in the directory to make your selection. This goes for combos as well. Combos will take longer to crack.
