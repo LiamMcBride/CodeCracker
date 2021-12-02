@@ -82,8 +82,8 @@ class BreakingGUI:
             self.lblEndTime.config(text="It was found in " + str(self.cracker.getTime()) + " seconds")
 
             self.times.append(self.cracker.getTime())
-            self.passwords.append(self.cracker.getCurrentPassword() + "\nw/ " + self.sha +
-             "\nUsing: " + self.dictionary + "\nUsing " + str(self.cracker.getTotalDone())
+            self.passwords.append(self.cracker.getCurrentPassword() + " w/ " + self.sha +
+             "\nUsing: " + self.dictionary + " Using " + str(self.cracker.getTotalDone())
               + " guesses")
             plt.bar(self.passwords, self.times)
             plt.ylabel('Time (Seconds)')

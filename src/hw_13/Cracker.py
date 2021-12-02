@@ -57,6 +57,10 @@ class Cracker:
                 dict_array.append(line.rstrip("\n"))
                 self.total += 1
         
+        if len(dict_array) == 0:
+            print("No password in the dictionary matches this.")
+            self.solved = True
+        
         return (dict_array)
            
     def crack_password(self, password, dictionary):
