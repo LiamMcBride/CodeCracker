@@ -67,7 +67,6 @@ class BreakingGUI:
             plt.ylabel('Time (Seconds)')
             plt.xlabel('Password')
             mng = plt.get_current_fig_manager()
-            mng.full_screen_toggle()
             plt.show()
         #Displays failure to user
         elif self.cracker.failed:

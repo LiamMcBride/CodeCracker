@@ -4,7 +4,7 @@ from Style import Style
 
 '''
 Set up GUI for the code cracker project.
-Authors: Liam McBride, Patrick Edmonds
+Authors: Liam McBride mailmcbride@vt.edu, Patrick Edmonds EdmondPM24@vt.edu
 Version: 12/01/2021
 '''
 class GUI:
